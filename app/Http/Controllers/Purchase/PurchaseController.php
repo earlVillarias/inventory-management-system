@@ -14,8 +14,6 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-use PhpOffice\PhpSpreadsheet\Writer\Xls;
 
 class PurchaseController extends Controller
 {
@@ -100,7 +98,7 @@ class PurchaseController extends Controller
 
         foreach ($products as $product) {
             Product::where('id', $product->product_id)
-                ->update(['quantity' => DB::raw('quantity+'.$product->quantity)]);
+                ->update(['quantity' => DB::raw('quantity+' . $product->quantity)]);
         }
 
         Purchase::findOrFail($purchase->id)
@@ -191,24 +189,24 @@ class PurchaseController extends Controller
         $this->exportExcel($purchase_array);
     }
 
-    public function exportExcel($products)
-    {
-        ini_set('max_execution_time', 0);
-        ini_set('memory_limit', '4000M');
+    // public function exportExcel($products)
+    // {
+    //     ini_set('max_execution_time', 0);
+    //     ini_set('memory_limit', '4000M');
 
-        try {
-            $spreadSheet = new Spreadsheet();
-            $spreadSheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
-            $spreadSheet->getActiveSheet()->fromArray($products);
-            $Excel_writer = new Xls($spreadSheet);
-            header('Content-Type: application/vnd.ms-excel');
-            header('Content-Disposition: attachment;filename="purchase-report.xls"');
-            header('Cache-Control: max-age=0');
-            ob_end_clean();
-            $Excel_writer->save('php://output');
-            exit();
-        } catch (Exception $e) {
-            return $e;
-        }
-    }
+    //     try {
+    //         $spreadSheet = new Spreadsheet();
+    //         $spreadSheet->getActiveSheet()->getDefaultColumnDimension()->setWidth(20);
+    //         $spreadSheet->getActiveSheet()->fromArray($products);
+    //         $Excel_writer = new Xls($spreadSheet);
+    //         header('Content-Type: application/vnd.ms-excel');
+    //         header('Content-Disposition: attachment;filename="purchase-report.xls"');
+    //         header('Cache-Control: max-age=0');
+    //         ob_end_clean();
+    //         $Excel_writer->save('php://output');
+    //         exit();
+    //     } catch (Exception $e) {
+    //         return $e;
+    //     }
+    // }
 }

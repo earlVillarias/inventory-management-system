@@ -18,9 +18,8 @@
                                     {{ __('Payed') }}
                                 </label>
 
-                                <input type="text" id="payed" class="form-control"
-                                       value="{{ Number::currency($order->pay, 'EUR') }}" disabled
-                                >
+                                <input type="text" id="payed" class="form-control" value="{{ $order->pay }}"
+                                    disabled>
                             </div>
                         </div>
 
@@ -30,8 +29,8 @@
                                     {{ __('Due') }}
                                 </label>
 
-                                <input type="text" id="due" class="form-control"
-                                       value="{{ Number::currency($order->due, 'EUR') }}" disabled>
+                                <input type="text" id="due" class="form-control" value="{{ $order->due }}"
+                                    disabled>
                             </div>
                         </div>
 
@@ -40,18 +39,14 @@
                                 {{ __('Pay Now') }}
                             </label>
 
-                            <input type="text"
-                                   id="pay_now"
-                                   name="pay"
-                                   class="form-control @error('pay') is-invalid @enderror"
-                                   value="{{ old('pay') }}"
-                                   required
-                            />
+                            <input type="text" id="pay_now" name="pay"
+                                class="form-control @error('pay') is-invalid @enderror" value="{{ old('pay') }}"
+                                required />
 
                             @error('pay')
-                            <div class="invalid-feedback">
-                                {{ $message }}
-                            </div>
+                                <div class="invalid-feedback">
+                                    {{ $message }}
+                                </div>
                             @enderror
                         </div>
                     </div>
@@ -61,7 +56,7 @@
                         {{ __('Cancel') }}
                     </button>
 
-{{--                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">--}}
+                    {{--                    <button type="submit" class="btn btn-primary" data-bs-dismiss="modal"> --}}
                     <button type="submit" class="btn btn-primary">
                         {{ __('Pay') }}
                     </button>
